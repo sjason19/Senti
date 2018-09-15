@@ -14,6 +14,19 @@
         width:325px;
         height:350px;
       }
+      /* Three image containers (use 25% for four, and 50% for two, etc) */
+      .column {
+        float: left;
+        width: 20px;
+        padding: 5px;
+      }
+
+      /* Clear floats after image containers */
+      .row::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
       #status {
         /* avoid an excessively wide status text */
         white-space: pre;
@@ -21,15 +34,13 @@
         overflow: hidden;
         max-width: 400px;
       }
+      #image-result {
+        width: 50%;
+        height: 20px;
+        margin-top: 20px;
+      }
       #goButton {
         margin-left:25px;
-      }
-      #keyword-result {
-        width:90%;
-        font-size:14px;
-        height:95px;
-        margin-top:20px;
-        height: 210px;
       }
     </style>
 
@@ -44,12 +55,18 @@
     <script src="popup.js"></script>
   </head>
   <body>
-    <img src="https://www.clarifai.com/static/images/logo.png" />
+      <div class="row">
+          <div class="column">
+            <img src="icon.png" alt="Icon" style="width:10%">
+          </div>
+          <div class="column">
+            <p>Emotion Check</p>
+          </div>
+        </div>
     <p>Let us check on your feelings today!</p>
     <input type="button" id="emotionalCheck" value="Check on how you're feeling" />
     <div id="status"></div>
-    <textarea id="keyword-result"></textarea>
-    <img id="image-result" hidden>
+    <img id="image-result">
   </body>
 </html>
 

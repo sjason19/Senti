@@ -5,49 +5,69 @@
  * @param {function(string)} errorCallback - Called when the image is not found.
  *   The callback gets a string that describes the failure reason.
  */
-function getImageKeywords(img) {
-  console.log(img);
-  const app = new Clarifai.App({
-    apiKey: '65c1d14cd9f94e27bf58fbf8da6f26c0'
-   });
+// function getImageKeywords(img) {
+//   console.log(img);
+//   const app = new Clarifai.App({
+//     apiKey: '65c1d14cd9f94e27bf58fbf8da6f26c0'
+//    });
 
-  $('#status').html("loading keywords for image...");
-  if(window.savedClarifaiResponse == null) {
-  app.models.predict(Clarifai.GENERAL_MODEL, img).then(
-              function(response) {
-                  console.log(response);
-                  var $el = $('#keyword-result');
-                  debugger;
-                  var keywordTags = response.data.outputs[0].data.concepts;
-                  for(var i=0;i<keywordTags.length;i++){
-                    var name = keywordTags[i].name;
-                    name = name.replace("\"","");
-                    name += ",";
-                  $el.append(name);
-                  }
-                  window.savedClarifaiResponse = response;
-                  $('#status').html("");
+//   $('#status').html("loading keywords for image...");
+//   if(window.savedClarifaiResponse == null) {
+//   app.models.predict(Clarifai.GENERAL_MODEL, img).then(
+//               function(response) {
+//                   console.log(response);
+//                   var $el = $('#keyword-result');
+//                   debugger;
+//                   var keywordTags = response.data.outputs[0].data.concepts;
+//                   for(var i=0;i<keywordTags.length;i++){
+//                     var name = keywordTags[i].name;
+//                     name = name.replace("\"","");
+//                     name += ",";
+//                   $el.append(name);
+//                   }
+//                   window.savedClarifaiResponse = response;
+//                   $('#status').html("");
 
-              },
-              function(err) {
-                  console.error(err);
-              }
-          );
-  } else {
-            var response = window.savedClarifaiResponse;
-            var keywords = '';
-            for(var j=0;j<response.data.outputs.length;j++){
-                for(var k=0;k<response.data.outputs[j].data.concepts.length;k++){
-                    if(response.data.outputs[j].data.concepts[k].value > probability && keywords.indexOf(response.data.outputs[j].data.concepts[k].name) == -1){
-                        keywords += ","+response.data.outputs[j].data.concepts[k].name;
-                        keywordArray.push({id: response.data.outputs[j].data.concepts[k].id, text: response.data.outputs[j].data.concepts[k].name});
-                    }
-                }
-            }
-            $('#status').html("");
-            document.getElementById('keyword-result').innerHTML = keywordArray;
-            console.log(keywordArray);
-  }
+//               },
+//               function(err) {
+//                   console.error(err);
+//               }
+//           );
+//   } else {
+//             var response = window.savedClarifaiResponse;
+//             var keywords = '';
+//             for(var j=0;j<response.data.outputs.length;j++){
+//                 for(var k=0;k<response.data.outputs[j].data.concepts.length;k++){
+//                     if(response.data.outputs[j].data.concepts[k].value > probability && keywords.indexOf(response.data.outputs[j].data.concepts[k].name) == -1){
+//                         keywords += ","+response.data.outputs[j].data.concepts[k].name;
+//                         keywordArray.push({id: response.data.outputs[j].data.concepts[k].id, text: response.data.outputs[j].data.concepts[k].name});
+//                     }
+//                 }
+//             }
+//             $('#status').html("");
+//             document.getElementById('keyword-result').innerHTML = keywordArray;
+//             console.log(keywordArray);
+//   }
+// }
+
+function resultHappy() {
+  var img = document.createElement("img");
+  img.src = "happy.png";
+
+  var src = document.getElementById("image-result");
+  src.appendChild(img);
+}
+
+function resultSad() {
+  
+}
+
+function resultLonely() {
+  
+}
+
+function resultAngry() {
+  
 }
 
 // Store CSS data in the "local" storage area.
@@ -65,17 +85,7 @@ function saveChanges() {
   var apiKeyVal = '65c1d14cd9f94e27bf58fbf8da6f26c0';
   // Save it using the Chrome extension storage API.
   storage.set({'apiKeyVal': apiKeyVal}, function() {
-    // Notify that we saved.
-    message('Settings saved');
   });
-}
-
-function message(msg) {
-  var message = document.getElementById('status');
-  message.innerText = msg;
-  setTimeout(function() {
-    message.innerText = '';
-  }, 3000);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -87,5 +97,6 @@ document.addEventListener('DOMContentLoaded', function() {
   window.emotionalCheck = document.getElementById('emotionalCheck');
 
   // Load any CSS that may have previously been saved.
-  emotionalCheck.addEventListener('click', getImageKeywords(getImageKeywords));
+  console.log("at event listener");
+  emotionalCheck.addEventListener('click', resultHappy());
 });

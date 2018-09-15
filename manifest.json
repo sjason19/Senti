@@ -10,8 +10,7 @@
   },
   "permissions": [
     "activeTab",
-    "storage",
-    "videoCapture"
+    "storage"
   ],
   "background": {
           "scripts": ["jquery.js", "clarifai.js"]
