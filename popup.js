@@ -74,6 +74,11 @@ function getEmotion() {
   );
 }
 
+async function getEmotionAsynchronous() {
+  var result = await getEmotion;
+  return result;
+}
+
 function resultHappy(country) {
   console.log("at happy")
   var img = document.createElement("img");
