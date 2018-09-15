@@ -49,6 +49,30 @@
 //             console.log(keywordArray);
 //   }
 // }
+const app = new Clarifai.App({
+  apiKey: '28d269d8ec60434c849e75a1d5ec4fbf'
+ });
+
+document.getElementById("emotion-button").addEventListener("click", getEmotion);
+
+function getEmotion() {
+  app.models.predict(Clarifai.GENERAL_MODEL, "https://previews.123rf.com/images/kurhan/kurhan1103/kurhan110300100/9050894-happy-man.jpg", {
+    selectConcepts: [
+      {name: 'happiness'},
+      {name: 'sadness'},
+      {name: 'neutral'}
+    ]
+  }).then(
+    function(response) {
+      // do something with response
+      console.log(response);
+    },
+    function(err) {
+      // there was an error
+      console.log("error");
+    }
+  );
+}
 
 function resultHappy(country) {
   console.log("at happy")
