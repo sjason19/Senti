@@ -10,7 +10,8 @@
   },
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "geolocation"
   ],
   "background": {
           "scripts": ["jquery.js", "clarifai.js"]

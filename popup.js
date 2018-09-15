@@ -50,24 +50,52 @@
 //   }
 // }
 
-function resultHappy() {
+function resultHappy(country) {
+  console.log("at happy")
   var img = document.createElement("img");
   img.src = "happy.png";
+  img.height = "100";
+  img.width = "100";
 
   var src = document.getElementById("image-result");
   src.appendChild(img);
 }
 
-function resultSad() {
-  
+function resultSad(country) {
+  console.log("at sad")
+  var img = document.createElement("img");
+  img.src = "happy.png";
+  img.height = "100";
+  img.width = "100";
+
+  var src = document.getElementById("image-result");
+  src.appendChild(img);
 }
 
-function resultLonely() {
-  
+function resultLonely(country) {
+  console.log("at lonely")
+  var img = document.createElement("img");
+  img.src = "happy.png";
+  img.height = "100";
+  img.width = "100";
+
+  var src = document.getElementById("image-result");
+  src.appendChild(img);
 }
 
-function resultAngry() {
-  
+function resultAngry(country) {
+  console.log("at angry")
+  var img = document.createElement("img");
+  img.src = "happy.png";
+  img.height = "100";
+  img.width = "100";
+
+  var src = document.getElementById("image-result");
+  src.appendChild(img);
+}
+
+function getLocation() {
+  return "canada"
 }
 
 // Store CSS data in the "local" storage area.
@@ -95,8 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
   window.savedClarifaiResponse = null;
   // Get at the DOM controls used in the sample.
   window.emotionalCheck = document.getElementById('emotionalCheck');
-
-  // Load any CSS that may have previously been saved.
-  console.log("at event listener");
-  emotionalCheck.addEventListener('click', resultHappy());
+    // Load any CSS that may have previously been saved.
+    console.log("at event listener");
+    emotionalCheck.addEventListener('click', resultHappy());
 });
