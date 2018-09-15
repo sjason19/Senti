@@ -53,7 +53,7 @@ const app = new Clarifai.App({
   apiKey: '28d269d8ec60434c849e75a1d5ec4fbf'
  });
 
-document.getElementById("emotion-button").addEventListener("click", getEmotion);
+document.getElementById("emotion-button").addEventListener("click", getEmotionAsynchronous);
 
 function getEmotion() {
   app.models.predict(Clarifai.GENERAL_MODEL, "https://previews.123rf.com/images/kurhan/kurhan1103/kurhan110300100/9050894-happy-man.jpg", {
@@ -75,8 +75,20 @@ function getEmotion() {
 }
 
 async function getEmotionAsynchronous() {
-  var result = await getEmotion;
-  return result;
+  var result = await getEmotion();
+  switch(result) {
+    case "happy":
+        resultHappy("canada");
+        break;
+    case "sad":
+        resultSad("canada");
+        break;
+    case "angry":
+        resultAngry("canada");
+        break;
+    default:
+        resultLonely("canada");
+  }
 }
 
 function resultHappy(country) {
@@ -150,9 +162,6 @@ document.addEventListener('DOMContentLoaded', function() {
   window.storage = chrome.storage.local;
 
   window.savedClarifaiResponse = null;
-  // Get at the DOM controls used in the sample.
-  window.emotionalCheck = document.getElementById('emotionalCheck');
     // Load any CSS that may have previously been saved.
     console.log("at event listener");
-    emotionalCheck.addEventListener('click', resultHappy());
 });
