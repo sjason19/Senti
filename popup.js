@@ -1,49 +1,4 @@
 /**
- * Get the current URL.
- *
- * @param {function(string)} callback - called when the URL of the current tab
- *   is found.
- */
-function getCurrentTabUrl(callback) {
-  // Query filter to be passed to chrome.tabs.query - see
-  // https://developer.chrome.com/extensions/tabs#method-query
-  var queryInfo = {
-    active: true,
-    currentWindow: true
-  };
-
-  chrome.tabs.query(queryInfo, function(tabs) {
-    // chrome.tabs.query invokes the callback with a list of tabs that match the
-    // query. When the popup is opened, there is certainly a window and at least
-    // one tab, so we can safely assume that |tabs| is a non-empty array.
-    // A window can only have one active tab at a time, so the array consists of
-    // exactly one tab.
-    var tab = tabs[0];
-
-    // A tab is a plain object that provides information about the tab.
-    // See https://developer.chrome.com/extensions/tabs#type-Tab
-    var url = tab.url;
-
-    // tab.url is only available if the "activeTab" permission is declared.
-    // If you want to see the URL of other tabs (e.g. after removing active:true
-    // from |queryInfo|), then the "tabs" permission is required to see their
-    // "url" properties.
-    //console.assert(typeof url == 'string', 'tab.url should be a string');
-
-    callback(url);
-  });
-
-  // Most methods of the Chrome extension APIs are asynchronous. This means that
-  // you CANNOT do something like this:
-  //
-  // var url;
-  // chrome.tabs.query(queryInfo, function(tabs) {
-  //   url = tabs[0].url;
-  // });
-  // alert(url); // Shows "undefined", because chrome.tabs.query is async.
-}
-
-/**
  * @param {string} searchTerm - Search term for Google Image search.
  * @param {function(string,number,number)} callback - Called when an image has
  *   been found. The callback gets the URL, width and height of the image.
@@ -107,34 +62,11 @@ function getImageKeywords(img) {
 
 function saveChanges() {
   // Get the current CSS snippet from the form.
-  var apiKeyVal = apiKey.value;
-  var apiSecretVal = apiSecret.value;
-  var apiValues = {'apiKey': apiKeyVal,'apiSecret': apiSecretVal};
-  // Check that there's some code there.
-  if (!apiKey) {
-    message('Error: No API key specified');
-    return;
-  }
-  if (!apiSecret) {
-    message('Error: No API secret specified');
-    return;
-  }
+  var apiKeyVal = '65c1d14cd9f94e27bf58fbf8da6f26c0';
   // Save it using the Chrome extension storage API.
-  storage.set({'apiValues': apiValues}, function() {
+  storage.set({'apiKeyVal': apiKeyVal}, function() {
     // Notify that we saved.
     message('Settings saved');
-  });
-}
-
-function loadChanges() {
-  storage.get('apiValues', function(items) {
-    // To avoid checking items.css we could specify storage.get({css: ''}) to
-    // return a default value of '' if there is no css value yet.
-    if (items.apiValues) {
-      apiKey.value = items.apiValues.apiKey;
-      apiSecret.value = items.apiValues.apiSecret;
-      message('Loaded saved API keys.');
-    }
   });
 }
 
@@ -147,8 +79,6 @@ function message(msg) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  //getImageKeywords();
-  console.log("this happened");
 
   window.storage = chrome.storage.local;
 
@@ -157,6 +87,5 @@ document.addEventListener('DOMContentLoaded', function() {
   window.emotionalCheck = document.getElementById('emotionalCheck');
 
   // Load any CSS that may have previously been saved.
-  loadChanges();
-  emotionalCheck.addEventListener('click', getCurrentTabUrl(getImageKeywords));
+  emotionalCheck.addEventListener('click', getImageKeywords(getImageKeywords));
 });
