@@ -2,6 +2,18 @@ var allowFocusChange = true;
 
 // set delay time (minimum sample rate) in ms
 var delayTime = 5000;
+var CATEGORIES = ['Social Networking', 'Shopping', 'News', 'Education', 'Technology', 'Sports', 'Finance', 'Other'];
+
+function getCategory(url) {
+	if (url.includes("facebook")) return 'Social Networking';
+	if (url.includes("amazon")) return 'Shopping';
+	if (url.includes("cnn")) return 'News';
+	if (url.includes("ubc")) return 'Education';
+	if (url.includes("techcrunch")) return 'Technology';
+	if (url.includes("nba")) return 'Sports';
+	if (url.includes("bloomberg")) return 'Finance';
+	return 'Other'
+}
 
 chrome.tabs.onUpdated.addListener(function (tabId, tabUpdateInfo, tabState) {
 	var blackList = [null, 'chrome://newtab']
@@ -9,22 +21,22 @@ chrome.tabs.onUpdated.addListener(function (tabId, tabUpdateInfo, tabState) {
 		// placeholder for opening secondary capture window
 		
 		chrome.storage.sync.get(['category'], function (result) {
-			var category;
+			var currentCategory;
 			console.log(result)
 			if (result == null) {
-				category = getCategory(tabUpdateInfo.url);
+				currentCategory = getCategory(tabUpdateInfo.url);
 
-				chrome.storage.sync.set({ sentiments: sentiments }, function () {
-					chrome.storage.local.get('sentiments', function (test) {
-						console.log(test.sentiments)
+				chrome.storage.sync.set({ category: currentCategory }, function () {
+					chrome.storage.local.get('category', function (test) {
+						console.log(test.category)
 					});
 				});
 			} else {
-				sentiments = items.sentiments;
-				sentiments.push({ result: result });
-				chrome.storage.sync.set({ sentiments: sentiments }, function () {
+				category = result.category;
+				currentCategory = getCategory(tabUpdateInfo.url);
+				chrome.storage.sync.set({ category: currentCategory }, function () {
 					chrome.storage.local.get('sentiments', function (test) {
-						console.log(test.sentiments)
+						console.log(test.category)
 					});
 				});
 			}
