@@ -53,7 +53,7 @@ const app = new Clarifai.App({
   apiKey: '28d269d8ec60434c849e75a1d5ec4fbf'
  });
 
-document.getElementById("emotion-button").addEventListener("click", getEmotion);
+document.getElementById("emotion-button").addEventListener("click", getEmotionAsynchronous);
 
 function getEmotion() {
   app.models.predict(Clarifai.GENERAL_MODEL, "https://previews.123rf.com/images/kurhan/kurhan1103/kurhan110300100/9050894-happy-man.jpg", {
@@ -65,7 +65,7 @@ function getEmotion() {
   }).then(
     function(response) {
       // do something with response
-      console.log(response);
+      return getLargestEmotion(response);
     },
     function(err) {
       // there was an error
@@ -74,24 +74,84 @@ function getEmotion() {
   );
 }
 
-function resultHappy() {
+function getLargestEmotion(response) {
+  var emotions = response.outputs[0].data.concepts;
+  var largestValue = emotions[0].value;
+  var largestEmotion = emotions[0].name;
+
+  for (var emotion in emotions) {
+    if (emotion.value > largestValue) {
+      largestValue = emotion.value;
+      largestEmotion = emotion.name;
+    }
+  }
+  console.log(largestEmotion);
+  return largestEmotion;
+}
+
+async function getEmotionAsynchronous() {
+  var result = await getEmotion();
+  switch(result) {
+    case "happiness":
+        resultHappy("canada");
+        break;
+    case "sad":
+        resultSad("canada");
+        break;
+    case "angry":
+        resultAngry("canada");
+        break;
+    default:
+        resultLonely("canada");
+  }
+}
+
+function resultHappy(country) {
+  console.log("at happy")
   var img = document.createElement("img");
   img.src = "happy.png";
+  img.height = "100";
+  img.width = "100";
 
   var src = document.getElementById("image-result");
   src.appendChild(img);
 }
 
-function resultSad() {
-  
+function resultSad(country) {
+  console.log("at sad")
+  var img = document.createElement("img");
+  img.src = "happy.png";
+  img.height = "100";
+  img.width = "100";
+
+  var src = document.getElementById("image-result");
+  src.appendChild(img);
 }
 
-function resultLonely() {
-  
+function resultLonely(country) {
+  console.log("at lonely")
+  var img = document.createElement("img");
+  img.src = "happy.png";
+  img.height = "100";
+  img.width = "100";
+
+  var src = document.getElementById("image-result");
+  src.appendChild(img);
 }
 
-function resultAngry() {
-  
+function resultAngry(country) {
+  console.log("at angry")
+  var img = document.createElement("img");
+  img.src = "happy.png";
+  img.height = "100";
+  img.width = "100";
+
+  var src = document.getElementById("image-result");
+  src.appendChild(img);
+}
+
+function getLocation() {
+  return "canada"
 }
 
 // Store CSS data in the "local" storage area.
@@ -117,10 +177,6 @@ document.addEventListener('DOMContentLoaded', function() {
   window.storage = chrome.storage.local;
 
   window.savedClarifaiResponse = null;
-  // Get at the DOM controls used in the sample.
-  window.emotionalCheck = document.getElementById('emotionalCheck');
-
-  // Load any CSS that may have previously been saved.
-  console.log("at event listener");
-  emotionalCheck.addEventListener('click', resultHappy());
+    // Load any CSS that may have previously been saved.
+    console.log("at event listener");
 });
