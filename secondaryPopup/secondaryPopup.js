@@ -7,12 +7,7 @@ function getEmotion() {
 		app.models.predict({ id: 'EmotionDetection', version: '8cdcab711f354950b68d3d239b50291b' }, { base64: getBase64() }).then(
 			function (response) {
 				// do something with response
-				// console.log(getBase64());
-				data = {
-					result: getLargestEmotion(response),
-					category: getCategory()
-				}
-				resolve(data);
+				resolve(getLargestEmotion(response));
 			},
 			function (err) {
 				// there was an error
@@ -38,13 +33,8 @@ function getLargestEmotion(response) {
 	return largestEmotion;
 }
 
-function getCategory() {
-	return;
-}
-
 async function getEmotionAsynchronous() {
 	var result;
-	var category;
 
 	try {
 		result = await getEmotion();
