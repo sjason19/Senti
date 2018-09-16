@@ -47,8 +47,7 @@ async function getEmotionAsynchronous() {
       if (items == null) {
         sentiments = [];
         sentiments.push({
-          result: result,
-          websiteCategory: 
+          result: result
         });
         chrome.storage.sync.set({ sentiments: sentiments }, function () {
           chrome.storage.local.get('sentiments', function (test) {
@@ -68,17 +67,6 @@ async function getEmotionAsynchronous() {
   } catch (err) {
     message(err)
   }
-}
-
-function resultHappy(country) {
-  console.log("at happy")
-  var img = document.createElement("img");
-  img.src = "happy.png";
-  img.height = "100";
-  img.width = "100";
-
-  var src = document.getElementById("image-result");
-  src.appendChild(img);
 }
 
 chrome.storage.onChanged.addListener(function (changes, namespace) {
