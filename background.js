@@ -6,7 +6,8 @@ var delayTime = 5000;
 chrome.tabs.onUpdated.addListener(function(tabId, tabUpdateInfo, tabState) {
     if (allowFocusChange && tabUpdateInfo.url != null) {
         // placeholder for opening secondary capture window
-        alert(tabUpdateInfo.url);
+        // alert(tabUpdateInfo.url);
+        chrome.windows.create({url: './secondaryPopup/secondaryPopup.html', type: 'popup', top: 0, left: 0, height: 1, width: 1});
         concatFocusChange();
     }
 });

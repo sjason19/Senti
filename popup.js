@@ -159,3 +159,4 @@ navigator.mediaDevices.getUserMedia(constraints)
   .then((stream) => {
     player.srcObject = stream;
   });
+  
