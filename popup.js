@@ -1,18 +1,12 @@
 const app = new Clarifai.App({
-  apiKey: '28d269d8ec60434c849e75a1d5ec4fbf'
+  apiKey: '00d157dbe1164bd5b891cdaa0cd25ba4'
 });
 
 document.getElementById("emotion-button").addEventListener("click", getEmotionAsynchronous);
 
 function getEmotion() {
   return new Promise(function (resolve, reject) {
-    app.models.predict(Clarifai.GENERAL_MODEL, {base64: getBase64()}, {
-      selectConcepts: [
-        { name: 'happiness' },
-        { name: 'sadness' },
-        { name: 'neutral' }
-      ]
-    }).then(
+    app.models.predict({id: 'EmotionDetection', version: '8cdcab711f354950b68d3d239b50291b'}, {base64: getBase64()}).then(
       function (response) {
         // do something with response
         // console.log(getBase64());
@@ -45,13 +39,13 @@ function getLargestEmotion(response) {
 async function getEmotionAsynchronous() {
   var result = await getEmotion();
   switch (result) {
-    case "happiness":
+    case "PositiveSentiment":
       resultHappy("canada");
       break;
-    case "sad":
+    case "NegativeSentiment":
       resultSad("canada");
       break;
-    case "angry":
+    case "NeutralSentiment":
       resultAngry("canada");
       break;
     default:
