@@ -48,7 +48,7 @@ async function getEmotionAsynchronous() {
       if (items == null) {
         sentiments = [];
         sentiments.push({
-          result: result
+          result
         });
         chrome.storage.sync.set({ sentiments: sentiments }, function () {
           chrome.storage.local.get('sentiments', function (test) {
