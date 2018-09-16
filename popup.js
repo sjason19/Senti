@@ -6,7 +6,7 @@ document.getElementById("emotion-button").addEventListener("click", getEmotionAs
 
 function getEmotion() {
   return new Promise(function (resolve, reject) {
-    app.models.predict({id: 'EmotionDetection', version: '8cdcab711f354950b68d3d239b50291b'}, {base64: getBase64()}).then(
+    app.models.predict({ id: 'EmotionDetection', version: '8cdcab711f354950b68d3d239b50291b' }, { base64: getBase64() }).then(
       function (response) {
         // do something with response
         // console.log(getBase64());
@@ -37,19 +37,36 @@ function getLargestEmotion(response) {
 }
 
 async function getEmotionAsynchronous() {
-  var result = await getEmotion();
-  switch (result) {
-    case "PositiveSentiment":
-      resultHappy("canada");
-      break;
-    case "NegativeSentiment":
-      resultSad("canada");
-      break;
-    case "NeutralSentiment":
-      resultAngry("canada");
-      break;
-    default:
-      resultLonely("canada");
+  var result;
+  
+  try {
+    result = await getEmotion();
+    chrome.storage.sync.get({ sentiments: [] }, function (items) {
+      var sentiments;
+      console.log(items)
+      if (items == null) {
+        sentiments = [];
+        sentiments.push({
+          result: result,
+          websiteCategory: 
+        });
+        chrome.storage.sync.set({ sentiments: sentiments }, function () {
+          chrome.storage.local.get('sentiments', function (test) {
+            console.log(test.sentiments)
+          });
+        });
+      } else {
+        sentiments = items.sentiments;
+        sentiments.push({ result: result });
+        chrome.storage.sync.set({ sentiments: sentiments }, function () {
+          chrome.storage.local.get('sentiments', function (test) {
+            console.log(test.sentiments)
+          });
+        });
+      }
+    });
+  } catch (err) {
+    message(err)
   }
 }
 
@@ -64,42 +81,17 @@ function resultHappy(country) {
   src.appendChild(img);
 }
 
-function resultSad(country) {
-  console.log("at sad")
-  var img = document.createElement("img");
-  img.src = "happy.png";
-  img.height = "100";
-  img.width = "100";
-
-  var src = document.getElementById("image-result");
-  src.appendChild(img);
-}
-
-function resultLonely(country) {
-  console.log("at lonely")
-  var img = document.createElement("img");
-  img.src = "happy.png";
-  img.height = "100";
-  img.width = "100";
-
-  var src = document.getElementById("image-result");
-  src.appendChild(img);
-}
-
-function resultAngry(country) {
-  console.log("at angry")
-  var img = document.createElement("img");
-  img.src = "happy.png";
-  img.height = "100";
-  img.width = "100";
-
-  var src = document.getElementById("image-result");
-  src.appendChild(img);
-}
-
-function getLocation() {
-  return "canada"
-}
+chrome.storage.onChanged.addListener(function (changes, namespace) {
+  for (key in changes) {
+    var storageChange = changes[key];
+    console.log('Storage key "%s" in namespace "%s" changed. ' +
+      'Old value was "%s", new value is "%s".',
+      key,
+      namespace,
+      storageChange.oldValue,
+      storageChange.newValue);
+  }
+});
 
 // Store CSS data in the "local" storage area.
 //
