@@ -1,0 +1,11 @@
+#player {
+    visibility: hidden;
+}
+
+#capture {
+    visibility: hidden;
+}
+
+#canvas {
+    visibility: hidden;
+}
