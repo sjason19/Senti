@@ -6,7 +6,7 @@ document.getElementById("emotion-button").addEventListener("click", getEmotionAs
 
 function getEmotion() {
   return new Promise(function (resolve, reject) {
-    app.models.predict(Clarifai.GENERAL_MODEL, "https://previews.123rf.com/images/kurhan/kurhan1103/kurhan110300100/9050894-happy-man.jpg", {
+    app.models.predict(Clarifai.GENERAL_MODEL, {base64: getBase64()}, {
       selectConcepts: [
         { name: 'happiness' },
         { name: 'sadness' },
@@ -15,6 +15,7 @@ function getEmotion() {
     }).then(
       function (response) {
         // do something with response
+        // console.log(getBase64());
         resolve(getLargestEmotion(response));
       },
       function (err) {
@@ -31,12 +32,13 @@ function getLargestEmotion(response) {
   var largestEmotion = emotions[0].name;
 
   for (var emotion in emotions) {
-    if (emotion.value > largestValue) {
-      largestValue = emotion.value;
-      largestEmotion = emotion.name;
+    console.log(emotions[emotion].name);
+    console.log(emotions[emotion].value);
+    if (emotions[emotion].value > largestValue) {
+      largestValue = emotions[emotion].value;
+      largestEmotion = emotions[emotion].name;
     }
   }
-  console.log(largestEmotion);
   return largestEmotion;
 }
 
@@ -129,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   window.savedClarifaiResponse = null;
   // Load any CSS that may have previously been saved.
-  console.log("at event listener");
+  // console.log("at event listener");
 });
 
 document.querySelector('#go-to-options').addEventListener("click", function () {
@@ -159,3 +161,9 @@ navigator.mediaDevices.getUserMedia(constraints)
   .then((stream) => {
     player.srcObject = stream;
   });
+
+function getBase64() {
+  var url = document.getElementById('canvas').toDataURL();
+  url = url.replace(/^data:image\/(png|jpg);base64,/, "");
+  return url;
+}
