@@ -1,18 +1,12 @@
 const app = new Clarifai.App({
-  apiKey: '28d269d8ec60434c849e75a1d5ec4fbf'
+  apiKey: '00d157dbe1164bd5b891cdaa0cd25ba4'
 });
 
 document.getElementById("emotion-button").addEventListener("click", getEmotionAsynchronous);
 
 function getEmotion() {
   return new Promise(function (resolve, reject) {
-    app.models.predict(Clarifai.GENERAL_MODEL, {base64: getBase64()}, {
-      selectConcepts: [
-        { name: 'happiness' },
-        { name: 'sadness' },
-        { name: 'neutral' }
-      ]
-    }).then(
+    app.models.predict({ id: 'EmotionDetection', version: '8cdcab711f354950b68d3d239b50291b' }, { base64: getBase64() }).then(
       function (response) {
         // do something with response
         // console.log(getBase64());
@@ -53,43 +47,40 @@ async function getEmotionAsynchronous() {
       console.log(items)
       if (items == null) {
         sentiments = [];
-        sentiments.push({result: result});
-        chrome.storage.sync.set({sentiments: sentiments}, function () {
+        sentiments.push({
+          result: result
+        });
+        chrome.storage.sync.set({ sentiments: sentiments }, function () {
           chrome.storage.local.get('sentiments', function (test) {
             console.log(test.sentiments)
           });
         });
       } else {
         sentiments = items.sentiments;
-        sentiments.push({result: result});
-        chrome.storage.sync.set({sentiments: sentiments}, function () {
+        sentiments.push({ result: result });
+        chrome.storage.sync.set({ sentiments: sentiments }, function () {
           chrome.storage.local.get('sentiments', function (test) {
             console.log(test.sentiments)
           });
         });
       }
-  });
+    });
   } catch (err) {
     message(err)
   }
 }
 
-function displaySentiments() {
-  
-}
-
-chrome.storage.onChanged.addListener(function(changes, namespace) {
+chrome.storage.onChanged.addListener(function (changes, namespace) {
   for (key in changes) {
     var storageChange = changes[key];
     console.log('Storage key "%s" in namespace "%s" changed. ' +
-                'Old value was "%s", new value is "%s".',
-                key,
-                namespace,
-                storageChange.oldValue,
-                storageChange.newValue);
+      'Old value was "%s", new value is "%s".',
+      key,
+      namespace,
+      storageChange.oldValue,
+      storageChange.newValue);
   }
 });
-
 
 // Store CSS data in the "local" storage area.
 //
