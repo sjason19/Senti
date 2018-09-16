@@ -8,7 +8,11 @@ function getEmotion() {
 			function (response) {
 				// do something with response
 				// console.log(getBase64());
-				resolve(getLargestEmotion(response));
+				data = {
+					result: getLargestEmotion(response),
+					category: getCategory()
+				}
+				resolve(data);
 			},
 			function (err) {
 				// there was an error
@@ -34,8 +38,13 @@ function getLargestEmotion(response) {
 	return largestEmotion;
 }
 
+function getCategory() {
+	return;
+}
+
 async function getEmotionAsynchronous() {
 	var result;
+	var category;
 
 	try {
 		result = await getEmotion();
