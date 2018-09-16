@@ -9,12 +9,14 @@
   },
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "tabs"
   ],
   "background": {
     "scripts": [
       "jquery.js",
-      "clarifai.js"
+      "clarifai.js",
+      "background.js"
     ]
   },
   "options_page": "options.html"
