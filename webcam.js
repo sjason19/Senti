@@ -1,5 +1,5 @@
 (
-    function() {
+    async function() {
     'use strict';
     var video = document.querySelector('video')
       , canvas;
@@ -27,12 +27,26 @@
 
     // use MediaDevices API
     // docs: https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
+    /*
     if (navigator.mediaDevices) {
       // access the web cam
-        navigator.webkitGetUserMedia({video: true}, 
-        ( function(stream) { video.srcObject = stream; } ), 
-        ( function(error) { document.body.textContent = 'Could not access the camera. Error: ' + error.name; } )
-    )
+
+      setTimeout(function(){
+
+      navigator.mediaDevices.getUserMedia({video: true})
+      // permission granted:
+      .then(function(stream) {
+          console.log("before")
+          video.srcObject = stream
+          video.addEventListener('click', takeSnapshot);
+      })
+      // permission denied:
+      .catch(function(error) {
+          document.body.textContent = 'Could not access the camera. Error: ' + error.name;
+      });
+
+    }, 5000);
     }
+    */
     
 })();
