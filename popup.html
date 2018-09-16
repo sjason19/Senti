@@ -8,22 +8,35 @@
 
 <head>
   <title>Emotional Check</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--
       - JavaScript and HTML must be in separate files: see our Content Security
       - Policy documentation[1] for details and explanation.
       -
       - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
      -->
+  <link rel="stylesheet" type="text/css" href="./bootstrap/css/bootstrap-theme.min.css" />
+  <link rel="stylesheet" type="text/css" href="./bootstrap/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="popup.css" />
   <script src="jquery.js"></script>
   <script src="clarifai.js"></script>
+  
 </head>
 
 <body>
-  <h1>Let's see how you're feeling today.</h1>
-  <button id="options-button">Get started</button>
-  <button id="analytics-button">Check your data</button>
-
+  <div class="container">
+    <div class="top-content">
+      <div class="header-1"><b>SENTI</b></div>
+      <hr>
+    </div>
+    <div class="bot-content">
+      <button type="button" class="btn btn-info" id="options-button">Get Started!</button>
+      <br />
+      <button type="button" class="btn btn-info" id="analytics-button">Analyze Data</button>
+    </div>
+  </div>
   <script src="popup.js"></script>
 </body>
 

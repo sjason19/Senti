@@ -1,0 +1,28 @@
+body {
+    height: 200px;
+    width: 250px;
+}
+
+.top-content {
+    position: absolute;
+    top: 5;
+    width: 80%;
+}
+
+.header-1 {
+    font-size: 30px;
+}
+
+.header-2 {
+    font-size: 18px;
+}
+
+.btn-info{
+    margin: 5px;
+}
+
+.bot-content {
+    position: absolute;
+    bottom: 10%;
+    padding-left: 0px;
+}
