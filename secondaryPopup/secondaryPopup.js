@@ -10,7 +10,6 @@ function getEmotion() {
 				// console.log(getBase64());
 				data = {
 					result: getLargestEmotion(response),
-					category: getCategory()
 				}
 				resolve(data);
 			},
@@ -36,10 +35,6 @@ function getLargestEmotion(response) {
 		}
 	}
 	return largestEmotion;
-}
-
-function getCategory() {
-	return;
 }
 
 async function getEmotionAsynchronous() {
