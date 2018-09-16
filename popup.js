@@ -1,20 +1,15 @@
 const app = new Clarifai.App({
-  apiKey: '28d269d8ec60434c849e75a1d5ec4fbf'
+  apiKey: '00d157dbe1164bd5b891cdaa0cd25ba4'
 });
 
 document.getElementById("emotion-button").addEventListener("click", getEmotionAsynchronous);
 
 function getEmotion() {
   return new Promise(function (resolve, reject) {
-    app.models.predict(Clarifai.GENERAL_MODEL, "https://previews.123rf.com/images/kurhan/kurhan1103/kurhan110300100/9050894-happy-man.jpg", {
-      selectConcepts: [
-        { name: 'happiness' },
-        { name: 'sadness' },
-        { name: 'neutral' }
-      ]
-    }).then(
+    app.models.predict({id: 'EmotionDetection', version: '8cdcab711f354950b68d3d239b50291b'}, {base64: getBase64()}).then(
       function (response) {
         // do something with response
+        // console.log(getBase64());
         resolve(getLargestEmotion(response));
       },
       function (err) {
@@ -31,25 +26,26 @@ function getLargestEmotion(response) {
   var largestEmotion = emotions[0].name;
 
   for (var emotion in emotions) {
-    if (emotion.value > largestValue) {
-      largestValue = emotion.value;
-      largestEmotion = emotion.name;
+    console.log(emotions[emotion].name);
+    console.log(emotions[emotion].value);
+    if (emotions[emotion].value > largestValue) {
+      largestValue = emotions[emotion].value;
+      largestEmotion = emotions[emotion].name;
     }
   }
-  console.log(largestEmotion);
   return largestEmotion;
 }
 
 async function getEmotionAsynchronous() {
   var result = await getEmotion();
   switch (result) {
-    case "happiness":
+    case "PositiveSentiment":
       resultHappy("canada");
       break;
-    case "sad":
+    case "NegativeSentiment":
       resultSad("canada");
       break;
-    case "angry":
+    case "NeutralSentiment":
       resultAngry("canada");
       break;
     default:
@@ -129,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   window.savedClarifaiResponse = null;
   // Load any CSS that may have previously been saved.
-  console.log("at event listener");
+  // console.log("at event listener");
 });
 
 document.querySelector('#go-to-options').addEventListener("click", function () {
@@ -159,4 +155,9 @@ navigator.mediaDevices.getUserMedia(constraints)
   .then((stream) => {
     player.srcObject = stream;
   });
-  
+
+function getBase64() {
+  var url = document.getElementById('canvas').toDataURL();
+  url = url.replace(/^data:image\/(png|jpg);base64,/, "");
+  return url;
+}
