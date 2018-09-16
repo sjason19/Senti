@@ -5,10 +5,11 @@
  value "popup.html".
  -->
 <html>
-  <head>
-    <title>Emotional Check</title>
-    <style>
-      body {
+
+<head>
+  <title>Emotional Check</title>
+  <style>
+    body {
         font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
         font-size: 100%;
         width:325px;
@@ -44,32 +45,37 @@
       }
     </style>
 
-    <!--
+  <!--
       - JavaScript and HTML must be in separate files: see our Content Security
       - Policy documentation[1] for details and explanation.
       -
       - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
      -->
-    <script src="jquery.js"></script>
-    <script src="clarifai.js"></script>
-  </head>
-  <body>
-      <div class="row">
-          <div class="column">
-            <img src="icon.png" alt="Icon" style="width:10%">
-          </div>
-          <div class="column">
-            <p>Emotion Check</p>
-          </div>
-        </div>
-    <p>Let us check on your feelings today!</p>
-    <input type="button" id="emotionalCheck" value="Check on how you're feeling" />
-    <div id="status"></div>
-    <img id="image-result">
-    <button id="emotion-button">Get emotion</button>
-    <video autoplay></video>
-    <script src="popup.js"></script>
-    <script src="webcam.js"></script>
-  </body>
-</html>
+  <script src="jquery.js"></script>
+  <script src="clarifai.js"></script>
+</head>
 
+<body>
+  <div class="row">
+    <div class="column">
+      <img src="icon.png" alt="Icon" style="width:10%">
+    </div>
+    <div class="column">
+      <p>Emotion Check</p>
+    </div>
+  </div>
+  <p>Let us check on your feelings today!</p>
+  <input type="button" id="emotionalCheck" value="Check on how you're feeling" />
+  <div id="status"></div>
+  <img id="image-result">
+  <button id="emotion-button">Get emotion</button>
+  <button id="go-to-options">Go to options</button>
+
+
+  <video id="player" controls autoplay></video>
+  <button id="capture">Capture</button>
+  <canvas id="canvas" width=320 height=240></canvas>
+
+  <script src="popup.js"></script>
+</body>
+</html>
