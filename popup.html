@@ -8,73 +8,21 @@
 
 <head>
   <title>Emotional Check</title>
-  <style>
-    body {
-        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-        font-size: 100%;
-        width:325px;
-        height:350px;
-      }
-      /* Three image containers (use 25% for four, and 50% for two, etc) */
-      .column {
-        float: left;
-        width: 20px;
-        padding: 5px;
-      }
-
-      /* Clear floats after image containers */
-      .row::after {
-        content: "";
-        clear: both;
-        display: table;
-      }
-      #status {
-        /* avoid an excessively wide status text */
-        white-space: pre;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        max-width: 400px;
-      }
-      #image-result {
-        width: 50%;
-        height: 20px;
-        margin-top: 20px;
-      }
-      #goButton {
-        margin-left:25px;
-      }
-    </style>
-
   <!--
       - JavaScript and HTML must be in separate files: see our Content Security
       - Policy documentation[1] for details and explanation.
       -
       - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
      -->
+  <link rel="stylesheet" type="text/css" href="popup.css" />
   <script src="jquery.js"></script>
   <script src="clarifai.js"></script>
 </head>
 
 <body>
-  <div class="row">
-    <div class="column">
-      <img src="icon.png" alt="Icon" style="width:10%">
-    </div>
-    <div class="column">
-      <p>Emotion Check</p>
-    </div>
-  </div>
-  <p>Let us check on your feelings today!</p>
-  <input type="button" id="emotionalCheck" value="Check on how you're feeling" />
-  <div id="status"></div>
-  <img id="image-result">
-  <button id="emotion-button">Get emotion</button>
-  <button id="go-to-options">Go to options</button>
-
-
-  <video id="player" controls autoplay></video>
-  <button id="capture">Capture</button>
-  <canvas id="canvas" width=320 height=240></canvas>
+  <h1>Let's see how you're feeling today.</h1>
+  <button id="options-button">Get started</button>
+  <button id="analytics-button">Check your data</button>
 
   <script src="popup.js"></script>
 </body>
