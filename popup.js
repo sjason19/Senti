@@ -41,69 +41,53 @@ function getLargestEmotion(response) {
 }
 
 async function getEmotionAsynchronous() {
-  var result = await getEmotion();
-  switch (result) {
-    case "happiness":
-      resultHappy("canada");
-      break;
-    case "sad":
-      resultSad("canada");
-      break;
-    case "angry":
-      resultAngry("canada");
-      break;
-    default:
-      resultLonely("canada");
+  var result;
+
+  try {
+    result = await getEmotion();
+
+    chrome.storage.sync.get({sentiments:[]}, function(items) {
+      var sentiments;
+      console.log(items)
+      if (items == null) {
+        sentiments = [];
+        sentiments.push({result: result});
+        chrome.storage.sync.set({sentiments: sentiments}, function () {
+          chrome.storage.local.get('sentiments', function (test) {
+            console.log(test.sentiments)
+          });
+        });
+      } else {
+        sentiments = items.sentiments;
+        sentiments.push({result: result});
+        chrome.storage.sync.set({sentiments: sentiments}, function () {
+          chrome.storage.local.get('sentiments', function (test) {
+            console.log(test.sentiments)
+          });
+        });
+      }
+  });
+  } catch (err) {
+    message(err)
   }
 }
 
-function resultHappy(country) {
-  console.log("at happy")
-  var img = document.createElement("img");
-  img.src = "happy.png";
-  img.height = "100";
-  img.width = "100";
-
-  var src = document.getElementById("image-result");
-  src.appendChild(img);
+function displaySentiments() {
+  
 }
 
-function resultSad(country) {
-  console.log("at sad")
-  var img = document.createElement("img");
-  img.src = "happy.png";
-  img.height = "100";
-  img.width = "100";
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+  for (key in changes) {
+    var storageChange = changes[key];
+    console.log('Storage key "%s" in namespace "%s" changed. ' +
+                'Old value was "%s", new value is "%s".',
+                key,
+                namespace,
+                storageChange.oldValue,
+                storageChange.newValue);
+  }
+});
 
-  var src = document.getElementById("image-result");
-  src.appendChild(img);
-}
-
-function resultLonely(country) {
-  console.log("at lonely")
-  var img = document.createElement("img");
-  img.src = "happy.png";
-  img.height = "100";
-  img.width = "100";
-
-  var src = document.getElementById("image-result");
-  src.appendChild(img);
-}
-
-function resultAngry(country) {
-  console.log("at angry")
-  var img = document.createElement("img");
-  img.src = "happy.png";
-  img.height = "100";
-  img.width = "100";
-
-  var src = document.getElementById("image-result");
-  src.appendChild(img);
-}
-
-function getLocation() {
-  return "canada"
-}
 
 // Store CSS data in the "local" storage area.
 //
