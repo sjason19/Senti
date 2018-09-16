@@ -14,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="./bootstrap/css/animate.css">
     <script src="jquery.js"></script>
 </head>
 
@@ -23,7 +24,44 @@
             text-align: center;
         }
         .options-content {
-            font-size: 24px;
+            font-size: 24px !important;
+        }
+        .options-note-content {
+            text-align: left !important;
+        }
+        .section-1 {
+            color: #000000;
+            height: 100vh;
+        }
+        .section-2 {
+            background-color: #ffffff;
+            color: #000000;
+            height: 100vh;
+            margin-top: auto;
+            margin-bottom: auto;
+            position: relative;
+        }
+        .section-3 {
+            color: #ffffff;
+            height: 100vh;
+            margin-top: auto;
+            margin-bottom: auto;
+            position: relative;
+        }
+        .head-color {
+            color: #7bbfff;
+        }
+        body {
+            background-image: url('https://images.unsplash.com/photo-1535553507350-349399fb7b72?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ae7be632c8dd2cb832210f9921835915&auto=format&fit=crop&w=2801&q=80');
+            background-size: cover;
+        }
+        #title {
+            color: #ffffff;
+            font-size: 100px;
+            text-align: center;
+        }
+        .secondary-title {
+            font-size: 50px;
         }
     </style>
     <!--[if lt IE 7]>
@@ -36,34 +74,89 @@
     <canvas id="canvas" width="640" height="480"></canvas>
     <script src="options.js" async defer></script>
     -->
-    <div class="container">
-        <h1><b>Why do we need webcam data?</b></h1>
+    <div class="row-fluid section-1">
         <br />
         <br />
         <br />
-        <p class="options-content">
-            ______ uses computer vision to predict emotions and analyze how different 
-            websites make you feel. Your webcam data is vital in allowing us to determine 
-            which sites affect you the most and let us help cater a selection of sites you might 
-            find helpful, as well as provide tips and support if necessary. By letting _____ use your 
-            webcam, you’re ensuring that we can provide you with the best service possible.
-        </p>
         <br />
         <br />
         <br />
-        <h1>
-            <b>Please note:</b>
-        </h1>
         <br />
         <br />
+        <div class="animated bounce" id="title"><b>SENTI</b>
+            <span class="secondary-title"><br />Do what makes you happy</span>
+        </div>
         <br />
-        <p>
-            <span class="options-content">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-            </span>
-        </p>
-        
 
+    </div>
+    <div class="container-fluid section-2">
+        <div class="row">
+        <div class="col-sm-2"></div>
+        <h1 class="head-color col-sm-8"><b>WHY DO WE NEED WEBCAM DATA?</b></h1>
+        <div class="col-sm-2"></div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="options-content col-sm-8 options-note-content">
+                Senti uses computer vision to predict emotions and analyze how different 
+                websites make you feel. Your webcam data is vital in allowing us to determine 
+                which sites affect you the most and let us help cater a selection of sites you might 
+                find helpful, as well as provide tips and support if necessary. By letting Senti use your 
+                webcam, you’re ensuring that we can provide you with the best service possible.
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+        <br />
+        <br />
+        <br />
+    </div>
+    <div class="container-fluid section-3">
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <h1 class="col-sm-8"><b>NOTE</b></h1>
+            <div class="col-sm-2"></div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <div class="row options-note-content">
+            <div class="col-sm-2"></div>
+            <div class="options-content col-sm-8 head-color"><b>THIS APP USES CLARIFAI</b></div>
+            <div class="col-sm-2"></div>
+        </div>
+        <div class="row options-note-content">
+            <div class="col-sm-2"></div>
+            <div class="options-content col-sm-8">Clarifai is an artificial intelligence and computer vision platform – to detect how you’re feeling at each website. We’ve trained the detection algorithm ourselves to achieve the most accurate results.</div>
+            <div class="col-sm-2"></div>
+        </div>
+        <br />
+        <div class="row options-note-content">
+            <div class="col-sm-2"></div>
+            <div class="options-content col-sm-8 head-color"><b>WE DON'T SAVE YOUR IMAGES</b></div>
+            <div class="col-sm-2"></div>
+        </div>
+        <div class="row options-note-content">
+            <div class="col-sm-2"></div>
+            <div class="options-content col-sm-8">Once data about your image has been returned from computer vision analysis, your photo is deleted.</div>
+            <div class="col-sm-2"></div>
+        </div>
+        <br />
+        <div class="row options-note-content">
+            <div class="col-sm-2"></div>
+            <div class="options-content col-sm-8 head-color"><b>WANT TO STOP LIVE? </b></div>
+            <div class="col-sm-2"></div>
+        </div>
+        <div class="row options-note-content">
+            <div class="col-sm-2"></div>
+            <div class="options-content col-sm-8">Senti can disabled at any time through the Google Chrome Extensions menu.</div>
+            <div class="col-sm-2"></div>
+        </div>
+        <br />
+        <br />
+        <br />
     </div>
     <script src="./bootstrap/js/bootstrap.min.js"></script>
 </body>
