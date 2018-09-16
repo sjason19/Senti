@@ -4,7 +4,7 @@ const app = new Clarifai.App({
 
 function getEmotion() {
 	return new Promise(function (resolve, reject) {
-		app.models.predict({ id: 'EmotionDetection', version: '8cdcab711f354950b68d3d239b50291b' }, { base64: getBase64() }).then(
+		app.models.predict({ id: 'EmotionDetection', version: 'c36a484a372247f083953ba108e26c19' }, { base64: getBase64() }).then(
 			function (response) {
 				// do something with response
 				resolve(getLargestEmotion(response));
@@ -111,8 +111,8 @@ function getWebcamImage() {
 }
 
 window.onload = function() {
-	getWebcamImage();
-	setTimeout(function() {
-		window.close();
-	}, 2000)
+			getWebcamImage();
+			setTimeout(function() {
+				window.close();
+			}, 2000)
 }

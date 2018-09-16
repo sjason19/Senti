@@ -5,6 +5,33 @@ var delayTime = 5000;
 
 chrome.tabs.onUpdated.addListener(function (tabId, tabUpdateInfo, tabState) {
 	if (allowFocusChange && tabUpdateInfo.url != null) {
+		var category = getCategory(tabUpdateInfo.url);
+		if (category != 'Other') {
+		chrome.storage.sync.get({ categories: [] }, function (items) {
+			var categories;
+			console.log(items)
+			if (items == null) {
+				categories = [];
+				categories.push({
+					category: category
+				});
+				chrome.storage.sync.set({ categories: categories }, function () {
+					chrome.storage.local.get('categories', function (test) {
+						console.log(test.categories)
+					});
+				});
+			} else {
+				categories = items.categories;
+				categories.push({ category: category });
+				chrome.storage.sync.set({ categories: categories }, function () {
+					chrome.storage.local.get('sentiments', function (test) {
+						console.log(test.categories)
+					});
+				});
+			}
+		});
+	}
+
 		// placeholder for opening secondary capture window
 		setTimeout(function() {
 			chrome.windows.create({ url: './secondaryPopup/secondaryPopup.html', type: 'popup', top: 0, left: 0, height: 1, width: 1, focused: false });
