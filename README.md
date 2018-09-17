@@ -8,9 +8,9 @@ Senti is a lightweight chrome extension that analyzes your sentiment using visio
 This chrome extension stores your data with chrome local storage to ensure your privacy is guaranteed. We simply upload the photo to make an API request via base64 encoding through the Clarifai API.
 
 ## Get Started
-### Clone this Repo
-### Navigate to Chrome > Manage Extensions
-### Enable Developer Mode
-### Load Unpacked Extension
-### Select the folder of this application
-### You're all set!
+1. Clone this Repo
+2. Navigate to Chrome > Manage Extensions
+3. Enable Developer Mode
+4. Load Unpacked Extension
+5. Select the folder of this application
+6. You're all set!
