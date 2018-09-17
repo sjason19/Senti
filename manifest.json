@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Emotional Check",
+  "name": "Senti",
   "description": "This extension checks up on how you're feeling and gives you the appropriate resources",
   "version": "1.0",
   "browser_action": {
