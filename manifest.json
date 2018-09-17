@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Senti",
-  "description": "This extension checks up on how you're feeling and gives you the appropriate resources",
+  "description": "Do what makes you happy",
   "version": "1.0",
   "browser_action": {
     "default_icon": "icon.png",
