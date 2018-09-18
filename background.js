@@ -1,10 +1,13 @@
-var allowFocusChange = true;
-
-// set delay time (minimum sample rate) in ms
+// can't record a new URL-visit entry within delayTime (in ms)
 var delayTime = 5000;
 
+// record user webcam input after inputTime (in ms)
+var inputTime = 2500;
+
+var allowFocusChange = true;
+
 chrome.tabs.onUpdated.addListener(function (tabId, tabUpdateInfo, tabState) {
-	if (allowFocusChange && tabUpdateInfo.url != null) {
+	if (allowFocusChange && isValidURL(tabUpdateInfo.url)) {
 		var category = getCategory(tabUpdateInfo.url);
 		if (category != 'Other') {
 		chrome.storage.sync.get({ categories: [] }, function (items) {
@@ -36,13 +39,17 @@ chrome.tabs.onUpdated.addListener(function (tabId, tabUpdateInfo, tabState) {
 		setTimeout(function() {
 			chrome.windows.create({ url: './secondaryPopup/secondaryPopup.html', type: 'popup', top: 0, left: 0, height: 1, width: 1, focused: false });
 			concatFocusChange();
-		}, 5000);
+		}, inputTime);
 	}
 });
 
 function concatFocusChange() {
 	allowFocusChange = false;
 	setTimeout(function () { allowFocusChange = true }, delayTime);
+}
+
+function isValidURL(url) {
+	return (!url.startsWith('chrome') && url != null);
 }
 
 function getCategory(url) {
