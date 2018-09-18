@@ -111,8 +111,8 @@ function getWebcamImage() {
 }
 
 window.onload = function() {
-	getWebcamImage();
-	setTimeout(function() {
-		window.close();
-	}, 2000)
+			getWebcamImage();
+			setTimeout(function() {
+				window.close();
+			}, 2000)
 }
