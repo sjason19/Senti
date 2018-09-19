@@ -7,34 +7,33 @@ var inputTime = 2500;
 var allowFocusChange = true;
 
 chrome.tabs.onUpdated.addListener(function (tabId, tabUpdateInfo, tabState) {
-	if (tabUpdateInfo.url != null) {
-		if (allowFocusChange && isValidURL(tabUpdateInfo.url)) {
-			var category = getCategory(tabUpdateInfo.url);
-			if (category != 'Other') {
-			chrome.storage.sync.get({ categories: [] }, function (items) {
-				var categories;
-				console.log(items)
-				if (items == null) {
-					categories = [];
-					categories.push({
-						category: category
+	if (allowFocusChange && isValidURL(tabUpdateInfo.url)) {
+		var category = getCategory(tabUpdateInfo.url);
+		if (category != 'Other') {
+		chrome.storage.sync.get({ categories: [] }, function (items) {
+			var categories;
+			console.log(items)
+			if (items == null) {
+				categories = [];
+				categories.push({
+					category: category
+				});
+				chrome.storage.sync.set({ categories: categories }, function () {
+					chrome.storage.local.get('categories', function (test) {
+						console.log(test.categories)
 					});
-					chrome.storage.sync.set({ categories: categories }, function () {
-						chrome.storage.local.get('categories', function (test) {
-							console.log(test.categories)
-						});
+				});
+			} else {
+				categories = items.categories;
+				categories.push({ category: category });
+				chrome.storage.sync.set({ categories: categories }, function () {
+					chrome.storage.local.get('sentiments', function (test) {
+						console.log(test.categories)
 					});
-				} else {
-					categories = items.categories;
-					categories.push({ category: category });
-					chrome.storage.sync.set({ categories: categories }, function () {
-						chrome.storage.local.get('sentiments', function (test) {
-							console.log(test.categories)
-						});
-					});
-				}
-			});
-		}
+				});
+			}
+		});
+		
 
 			// placeholder for opening secondary capture window
 			setTimeout(function() {
@@ -51,7 +50,7 @@ function concatFocusChange() {
 }
 
 function isValidURL(url) {
-	return (!url.startsWith('chrome') && url != null);
+	return (url != null && !url.startsWith('chrome'));
 }
 
 function getCategory(url) {
