@@ -49,7 +49,7 @@ function concatFocusChange() {
 }
 
 function isValidURL(url) {
-	return (!url.startsWith('chrome') && url != null);
+	return (url != null && !url.startsWith('chrome'));
 }
 
 function getCategory(url) {
