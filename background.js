@@ -33,13 +33,14 @@ chrome.tabs.onUpdated.addListener(function (tabId, tabUpdateInfo, tabState) {
 				});
 			}
 		});
-	}
+		
 
-		// placeholder for opening secondary capture window
-		setTimeout(function() {
-			chrome.windows.create({ url: './secondaryPopup/secondaryPopup.html', type: 'popup', top: 0, left: 0, height: 1, width: 1, focused: false });
-			concatFocusChange();
-		}, inputTime);
+			// placeholder for opening secondary capture window
+			setTimeout(function() {
+				chrome.windows.create({ url: './secondaryPopup/secondaryPopup.html', type: 'popup', top: 0, left: 0, height: 1, width: 1, focused: false });
+				concatFocusChange();
+			}, inputTime);
+		}
 	}
 });
 
@@ -49,7 +50,7 @@ function concatFocusChange() {
 }
 
 function isValidURL(url) {
-	return (!url.startsWith('chrome') && url != null);
+	return (url != null && !url.startsWith('chrome'));
 }
 
 function getCategory(url) {
